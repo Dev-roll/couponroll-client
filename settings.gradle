@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "CouponRoll"
+rootProject.name = "CouponRoll (Client)"
 include ':app'

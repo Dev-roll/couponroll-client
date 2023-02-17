@@ -2,14 +2,12 @@ package app.web.couponroll
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import app.web.couponroll.ui.theme.CouponRollTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,25 +17,19 @@ class MainActivity : ComponentActivity() {
             CouponRollTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    CttApp()
                 }
             }
         }
+
+        onBackPressedDispatcher.addCallback(callback)
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CouponRollTheme {
-        Greeting("Android")
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            return
+        }
     }
 }
