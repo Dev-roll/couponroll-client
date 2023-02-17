@@ -4,7 +4,7 @@ import android.app.Application
 import app.web.couponroll.model.AppContainer
 import app.web.couponroll.model.AppDataContainer
 
-class CttApplication : Application() {
+class CouponRollApplication : Application() {
     lateinit var container: AppContainer
 
     override fun onCreate() {

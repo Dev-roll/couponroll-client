@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import app.web.couponroll.R
 
 @Composable
-fun CttTopAppBar(
+fun CouponRollTopAppBar(
     title: String,
     canNavigateBack: Boolean,
     modifier: Modifier = Modifier,

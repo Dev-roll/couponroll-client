@@ -13,7 +13,7 @@ import app.web.couponroll.ui.home.HomeDestination
 import app.web.couponroll.ui.home.HomeScreen
 
 @Composable
-fun CttNavHost(
+fun CouponRollNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {

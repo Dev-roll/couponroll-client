@@ -27,7 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import app.web.couponroll.R
 import app.web.couponroll.ui.AppViewModelProvider
-import app.web.couponroll.ui.components.CttTopAppBar
+import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.home.HomeViewModel
 import app.web.couponroll.ui.navigation.NavigationDestination
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -80,7 +80,7 @@ fun CaptureScreen(
 
     Scaffold(
         topBar = {
-            CttTopAppBar(
+            CouponRollTopAppBar(
                 title = stringResource(CaptureDestination.titleRes),
                 canNavigateBack = canNavigateBack,
                 navigateUp = onNavigateUp

@@ -12,9 +12,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import app.web.couponroll.ui.navigation.CttNavHost
+import app.web.couponroll.ui.navigation.CouponRollNavHost
 
 @Composable
-fun CttApp(navController: NavHostController = rememberNavController()) {
-    CttNavHost(navController = navController)
+fun CouponRollApp(navController: NavHostController = rememberNavController()) {
+    CouponRollNavHost(navController = navController)
 }

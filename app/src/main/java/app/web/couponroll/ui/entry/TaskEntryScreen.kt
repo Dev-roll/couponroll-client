@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import app.web.couponroll.R
 import app.web.couponroll.ui.AppViewModelProvider
-import app.web.couponroll.ui.components.CttTopAppBar
+import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.navigation.NavigationDestination
 import kotlinx.coroutines.launch
 
@@ -46,7 +46,7 @@ fun TaskEntryScreen(
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
-            CttTopAppBar(
+            CouponRollTopAppBar(
                 title = stringResource(TaskEntryDestination.titleRes),
                 canNavigateBack = canNavigateBack,
                 navigateUp = onNavigateUp

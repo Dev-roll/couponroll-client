@@ -23,7 +23,7 @@ import coil.compose.rememberAsyncImagePainter
 import app.web.couponroll.R
 import app.web.couponroll.model.Task
 import app.web.couponroll.ui.AppViewModelProvider
-import app.web.couponroll.ui.components.CttTopAppBar
+import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.navigation.NavigationDestination
 import app.web.couponroll.ui.theme.DoneColor
 import app.web.couponroll.ui.theme.OffColor
@@ -44,7 +44,7 @@ fun HomeScreen(
     val homeUiState by viewModel.homeUiState.collectAsState()
     Scaffold(
         topBar = {
-            CttTopAppBar(
+            CouponRollTopAppBar(
                 title = stringResource(HomeDestination.titleRes),
                 canNavigateBack = false
             )
@@ -108,7 +108,7 @@ private fun TaskList(
         Column (
             modifier = Modifier
                 .padding(16.dp)
-                .background(color = Color.LightGray),
+                .background(color = Color.DarkGray),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             for (sweets in itemList) {
@@ -178,7 +178,7 @@ private fun TaskItem(
                     )
                     Text(
                         text = task.description,
-                        color = Color(120,120,120),
+                        color = Color(200, 200, 200),
                         fontSize = 14.sp,
                     )
                 }
