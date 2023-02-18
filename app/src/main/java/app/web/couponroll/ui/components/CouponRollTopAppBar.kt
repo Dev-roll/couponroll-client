@@ -1,16 +1,15 @@
 package app.web.couponroll.ui.components
 
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import app.web.couponroll.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CouponRollTopAppBar(
     title: String,
