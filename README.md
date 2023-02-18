@@ -1,4 +1,4 @@
-# Couponroll - Client
+# Couponroll - Client (for Customer)
 
 A coupon/points application for your city that can be easily introduced to any store with just one smartphone.
 
