@@ -1,47 +1,29 @@
 package app.web.couponroll.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-
-private val DarkColorPalette = darkColors(
-    primary = DarkPrimary,
-    primaryVariant = DarkPrimaryVariant,
-    secondary = DarkSecondary
-)
-
-private val LightColorPalette = lightColors(
-    primary = LightPrimary,
-    primaryVariant = LightPrimaryVariant,
-    secondary = LightSecondary
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun CouponRollTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    isEnableDynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
+    val context = LocalContext.current
+    val isUseDynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+            && isEnableDynamicColor
+    val colorScheme = when {
+        isUseDynamicColor && darkTheme -> dynamicDarkColorScheme(context)
+        isUseDynamicColor && !darkTheme -> dynamicLightColorScheme(context)
+        darkTheme -> darkColorScheme()
+        else -> lightColorScheme()
     }
 
     MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
+        colorScheme = colorScheme,
         content = content
     )
 }

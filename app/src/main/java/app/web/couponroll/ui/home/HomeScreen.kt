@@ -1,17 +1,16 @@
 package app.web.couponroll.ui.home
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarBorder
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -19,21 +18,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberAsyncImagePainter
 import app.web.couponroll.R
 import app.web.couponroll.model.Task
 import app.web.couponroll.ui.AppViewModelProvider
 import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.navigation.NavigationDestination
-import app.web.couponroll.ui.theme.DoneColor
 import app.web.couponroll.ui.theme.OffColor
 import app.web.couponroll.ui.theme.StarOnColor
+import coil.compose.rememberAsyncImagePainter
 
 object HomeDestination : NavigationDestination {
     override val route = "home"
     override val titleRes = R.string.home_title
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navigateToCapture: () -> Unit,
@@ -52,12 +51,14 @@ fun HomeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = navigateToCapture,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.navigationBarsPadding()
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(R.string.task_entry_title),
-                    tint = MaterialTheme.colors.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         },
@@ -83,7 +84,7 @@ private fun HomeBody(
     if (itemList.isEmpty()) {
         Text(
             text = stringResource(R.string.no_item_description),
-            style = MaterialTheme.typography.subtitle2
+            style = MaterialTheme.typography.headlineSmall
         )
     } else {
         TaskList(
@@ -105,11 +106,12 @@ private fun TaskList(
 ) {
     BoxWithConstraints {
         val screenWidth = with(LocalDensity.current) { constraints.maxWidth }
-        Column (
+        Column(
             modifier = Modifier
-                .padding(16.dp)
-                .background(color = Color.DarkGray),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
+                .verticalScroll(rememberScrollState())
+                .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             for (sweets in itemList) {
                 TaskItem(
@@ -121,7 +123,6 @@ private fun TaskList(
                 )
             }
         }
-
     }
 
 //    LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -146,18 +147,21 @@ private fun TaskItem(
     modifier: Modifier = Modifier,
     width: Double
 ) {
-    Box( modifier = modifier
+    Box(modifier = modifier
         .clickable { onTaskClick(task) }
+        .background(color = MaterialTheme.colorScheme.secondaryContainer)
+        .padding(8.dp)
     ) {
-        Row{
+        Row {
             Image(
                 painter = rememberAsyncImagePainter(task.filePath),
                 contentDescription = "captured image",
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier.size((width / 8).dp)
             )
-            Row( modifier = modifier
-                .padding(vertical = 16.dp),
+            Row(
+                modifier = modifier
+                    .padding(vertical = 16.dp),
             ) {
 //                    IconToggleButton(
 //                        checked = task.isCompleted,
@@ -169,8 +173,9 @@ private fun TaskItem(
 //                            tint = if (task.isCompleted) DoneColor else OffColor
 //                        )
 //                    }
-                Column (
-                    modifier = Modifier.size((width / 5).dp)
+                Column(
+                    modifier = Modifier
+                        .size((width / 5).dp)
                 ) {
                     Text(
                         text = task.title,
@@ -178,7 +183,6 @@ private fun TaskItem(
                     )
                     Text(
                         text = task.description,
-                        color = Color(200, 200, 200),
                         fontSize = 14.sp,
                     )
                 }

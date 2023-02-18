@@ -3,11 +3,11 @@ package app.web.couponroll.ui.entry
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.Notes
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -20,11 +20,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberAsyncImagePainter
 import app.web.couponroll.R
 import app.web.couponroll.ui.AppViewModelProvider
 import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.navigation.NavigationDestination
+import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
 
 
@@ -33,6 +33,7 @@ object TaskEntryDestination : NavigationDestination {
     override val titleRes = R.string.task_entry_title
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskEntryScreen(
     navigateBack: () -> Unit,
@@ -108,6 +109,7 @@ fun TaskEntryBody(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskInputForm(
     taskDetails: TaskDetails,
