@@ -94,7 +94,7 @@ fun CaptureScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            LargeFloatingActionButton(
                 onClick = {
                     coroutineScope.launch {
                         val savedFile = imageCaptureUseCase.takePicture(context.executor)
@@ -145,13 +145,13 @@ fun CaptureScreen(
                     Text(
                         text = detectedQrCode.value,
                         color = Color.White,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .background(Color.Black.copy(alpha = 0.5f))
-                            .padding(top = 20.dp, bottom = 80.dp)
+                            .padding(top = 20.dp, bottom = 120.dp)
                     )
                 }
             }
