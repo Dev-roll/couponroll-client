@@ -1,4 +1,4 @@
-package app.web.couponroll.ui.capture
+package app.web.couponroll.ui.add_store
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -51,14 +51,14 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-object CaptureDestination : NavigationDestination {
-    override val route = "capture"
-    override val titleRes = R.string.capture_title
+object AddStoreDestination : NavigationDestination {
+    override val route = "add_store"
+    override val titleRes = R.string.add_store_title
 }
 
 @OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun CaptureScreen(
+fun AddStoreScreen(
     navController: NavController,
     navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
@@ -88,7 +88,7 @@ fun CaptureScreen(
     Scaffold(
         topBar = {
             CouponRollTopAppBar(
-                title = stringResource(CaptureDestination.titleRes),
+                title = stringResource(AddStoreDestination.titleRes),
                 canNavigateBack = canNavigateBack,
                 navigateUp = onNavigateUp
             )

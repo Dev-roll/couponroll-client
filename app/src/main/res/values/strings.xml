@@ -1,13 +1,20 @@
 <resources>
-    <!-- CTT -->
+    <!-- CouponRoll (Client) -->
     <string name="app_name">CouponRoll (Client)</string>
 
     <!-- Home -->
     <string name="home_title">CouponRoll (Client)</string>
     <string name="add_button">タスクを追加</string>
 
-    <!-- Capture -->
-    <string name="capture_title">タスクを追加</string>
+    <!-- MyCoupons -->
+    <string name="my_coupons_title">Myクーポン</string>
+
+    <!-- StoreList -->
+    <string name="store_list_title">お店一覧</string>
+    <string name="add_store">お気に入りのお店を追加</string>
+
+    <!-- AddStore -->
+    <string name="add_store_title">お店を追加</string>
 
     <!-- Entry -->
     <string name="task_entry_title">説明を追加</string>
