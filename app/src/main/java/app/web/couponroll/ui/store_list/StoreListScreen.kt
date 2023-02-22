@@ -55,7 +55,7 @@ fun StoreListScreen(
             FloatingActionButton(
                 onClick = navigateToAddStore,
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
+                contentColor = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.navigationBarsPadding()
             ) {
                 Icon(
@@ -109,19 +109,26 @@ private fun TaskList(
 ) {
     BoxWithConstraints {
         val screenWidth = with(LocalDensity.current) { constraints.maxWidth }
-        Column {
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp, top = 80.dp, end = 8.dp, bottom = 20.dp)
+                .verticalScroll(rememberScrollState())
+                .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 0.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
 //            お気に入り
-            Icon(
-                imageVector = Icons.Rounded.Favorite,
-                contentDescription = stringResource(R.string.task_entry_title),
-                tint = MaterialTheme.colorScheme.onPrimary
-            )
-            Text(text = "お気に入り")
+            Row {
+                Icon(
+                    imageVector = Icons.Rounded.Favorite,
+                    contentDescription = stringResource(R.string.task_entry_title),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text(text = "お気に入り")
+            }
             Row(
                 modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
-                    .verticalScroll(rememberScrollState())
-                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+                    .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 for (sweets in itemList) {
@@ -135,17 +142,18 @@ private fun TaskList(
                 }
             }
 //            おすすめ
-            Icon(
-                imageVector = Icons.Rounded.Redeem,
-                contentDescription = stringResource(R.string.task_entry_title),
-                tint = MaterialTheme.colorScheme.onPrimary
-            )
-            Text(text = "おすすめ")
+            Row {
+                Icon(
+                    imageVector = Icons.Rounded.Redeem,
+                    contentDescription = stringResource(R.string.task_entry_title),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text(text = "おすすめ")
+            }
             Row(
                 modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
-                    .verticalScroll(rememberScrollState())
-                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+                    .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 for (sweets in itemList) {
@@ -159,17 +167,18 @@ private fun TaskList(
                 }
             }
 //            人気
-            Icon(
-                imageVector = Icons.Rounded.ThumbUp,
-                contentDescription = stringResource(R.string.task_entry_title),
-                tint = MaterialTheme.colorScheme.onPrimary
-            )
-            Text(text = "人気")
+            Row {
+                Icon(
+                    imageVector = Icons.Rounded.ThumbUp,
+                    contentDescription = stringResource(R.string.task_entry_title),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text(text = "人気")
+            }
             Row(
                 modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
-                    .verticalScroll(rememberScrollState())
-                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+                    .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 for (sweets in itemList) {
@@ -182,19 +191,19 @@ private fun TaskList(
                     )
                 }
             }
-
 //            急上昇
-            Icon(
-                imageVector = Icons.Rounded.TrendingUp,
-                contentDescription = stringResource(R.string.task_entry_title),
-                tint = MaterialTheme.colorScheme.onPrimary
-            )
-            Text(text = "急上昇")
+            Row {
+                Icon(
+                    imageVector = Icons.Rounded.TrendingUp,
+                    contentDescription = stringResource(R.string.task_entry_title),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text(text = "急上昇")
+            }
             Row(
                 modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
-                    .verticalScroll(rememberScrollState())
-                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+                    .horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 for (sweets in itemList) {
