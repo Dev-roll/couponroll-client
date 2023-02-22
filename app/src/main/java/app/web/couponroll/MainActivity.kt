@@ -2,7 +2,6 @@ package app.web.couponroll
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,13 +24,6 @@ class MainActivity : ComponentActivity() {
                     CouponRollApp()
                 }
             }
-        }
-        onBackPressedDispatcher.addCallback(callback)
-    }
-
-    private val callback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            return
         }
     }
 }
