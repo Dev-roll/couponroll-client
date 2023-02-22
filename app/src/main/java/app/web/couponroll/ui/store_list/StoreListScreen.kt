@@ -2,15 +2,15 @@ package app.web.couponroll.ui.store_list
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarBorder
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -109,22 +109,105 @@ private fun TaskList(
 ) {
     BoxWithConstraints {
         val screenWidth = with(LocalDensity.current) { constraints.maxWidth }
-        Column(
-            modifier = Modifier
-                .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
-                .verticalScroll(rememberScrollState())
-                .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            for (sweets in itemList) {
-                TaskItem(
-                    task = sweets,
-//                    onTaskClick = onTaskClick,
-                    onCompletedChange = { onTaskCheckedChange(sweets, it) },
-                    onStarredChange = { onTaskStarredChange(sweets, it) },
-                    width = screenWidth.toDouble()
-                )
+        Column {
+//            お気に入り
+            Icon(
+                imageVector = Icons.Rounded.Favorite,
+                contentDescription = stringResource(R.string.task_entry_title),
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
+            Text(text = "お気に入り")
+            Row(
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                for (sweets in itemList) {
+                    TaskItem(
+                        task = sweets,
+                        //                    onTaskClick = onTaskClick,
+                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+                        onStarredChange = { onTaskStarredChange(sweets, it) },
+                        width = screenWidth.toDouble()
+                    )
+                }
             }
+//            おすすめ
+            Icon(
+                imageVector = Icons.Rounded.Redeem,
+                contentDescription = stringResource(R.string.task_entry_title),
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
+            Text(text = "おすすめ")
+            Row(
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                for (sweets in itemList) {
+                    TaskItem(
+                        task = sweets,
+                        //                    onTaskClick = onTaskClick,
+                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+                        onStarredChange = { onTaskStarredChange(sweets, it) },
+                        width = screenWidth.toDouble()
+                    )
+                }
+            }
+//            人気
+            Icon(
+                imageVector = Icons.Rounded.ThumbUp,
+                contentDescription = stringResource(R.string.task_entry_title),
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
+            Text(text = "人気")
+            Row(
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                for (sweets in itemList) {
+                    TaskItem(
+                        task = sweets,
+                        //                    onTaskClick = onTaskClick,
+                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+                        onStarredChange = { onTaskStarredChange(sweets, it) },
+                        width = screenWidth.toDouble()
+                    )
+                }
+            }
+
+//            急上昇
+            Icon(
+                imageVector = Icons.Rounded.TrendingUp,
+                contentDescription = stringResource(R.string.task_entry_title),
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
+            Text(text = "急上昇")
+            Row(
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                for (sweets in itemList) {
+                    TaskItem(
+                        task = sweets,
+                        //                    onTaskClick = onTaskClick,
+                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+                        onStarredChange = { onTaskStarredChange(sweets, it) },
+                        width = screenWidth.toDouble()
+                    )
+                }
+            }
+
         }
     }
 
