@@ -2,29 +2,20 @@ package app.web.couponroll.ui.store_list
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import app.web.couponroll.R
 import app.web.couponroll.model.Task
-import app.web.couponroll.ui.AppViewModelProvider
 import app.web.couponroll.ui.components.CouponRollTopAppBar
-import app.web.couponroll.ui.home.HomeDestination
-import app.web.couponroll.ui.home.HomeViewModel
 import app.web.couponroll.ui.navigation.NavigationDestination
 import app.web.couponroll.ui.theme.OffColor
 import app.web.couponroll.ui.theme.StarOnColor
@@ -41,9 +32,9 @@ fun StoreListScreen(
     navigateToAddStore: () -> Unit,
 //    navigateToTaskUpdate: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+//    viewModel: StoreListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val storeListUiState by viewModel.homeUiState.collectAsState()
+//    val storeListUiState by viewModel.storeListUiState.collectAsState()
     Scaffold(
         topBar = {
             CouponRollTopAppBar(
@@ -67,10 +58,10 @@ fun StoreListScreen(
         },
     ) { innerPadding ->
         HomeBody(
-            itemList = storeListUiState.itemList,
+//            itemList = storeListUiState.itemList,
 //            onTaskClick = navigateToTaskUpdate,
-            onTaskCheckedChange = viewModel::completeTask,
-            onTaskStarredChange = viewModel::starTask,
+//            onTaskCheckedChange = viewModel::completeTask,
+//            onTaskStarredChange = viewModel::starTask,
             modifier = modifier.padding(innerPadding)
         )
     }
@@ -78,33 +69,33 @@ fun StoreListScreen(
 
 @Composable
 private fun HomeBody(
-    itemList: List<Task>,
+//    itemList: List<Task>,
 //    onTaskClick: (String) -> Unit,
-    onTaskCheckedChange: (Task, Boolean) -> Unit,
-    onTaskStarredChange: (Task, Boolean) -> Unit,
+//    onTaskCheckedChange: (Task, Boolean) -> Unit,
+//    onTaskStarredChange: (Task, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (itemList.isEmpty()) {
-        Text(
-            text = stringResource(R.string.no_item_description),
-            style = MaterialTheme.typography.headlineSmall
-        )
-    } else {
-        TaskList(
-            itemList = itemList,
+//    if (itemList.isEmpty()) {
+//        Text(
+//            text = stringResource(R.string.no_item_description),
+//            style = MaterialTheme.typography.headlineSmall
+//        )
+//    } else {
+    TaskList(
+//            itemList = itemList,
 //            onTaskClick = { onTaskClick(it.id) },
-            onTaskCheckedChange = onTaskCheckedChange,
-            onTaskStarredChange = onTaskStarredChange
-        )
-    }
+//            onTaskCheckedChange = onTaskCheckedChange,
+//            onTaskStarredChange = onTaskStarredChange
+    )
+//    }
 }
 
 @Composable
 private fun TaskList(
-    itemList: List<Task>,
+//    itemList: List<Task>,
 //    onTaskClick: (Task) -> Unit,
-    onTaskCheckedChange: (Task, Boolean) -> Unit,
-    onTaskStarredChange: (Task, Boolean) -> Unit,
+//    onTaskCheckedChange: (Task, Boolean) -> Unit,
+//    onTaskStarredChange: (Task, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints {
@@ -125,22 +116,22 @@ private fun TaskList(
                 )
                 Text(text = "お気に入り")
             }
-            Row(
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                for (sweets in itemList) {
-                    TaskItem(
-                        task = sweets,
-                        //                    onTaskClick = onTaskClick,
-                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-                        onStarredChange = { onTaskStarredChange(sweets, it) },
-                        width = screenWidth.toDouble()
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier
+//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+//                    .horizontalScroll(rememberScrollState()),
+//                horizontalArrangement = Arrangement.spacedBy(8.dp)
+//            ) {
+//                for (sweets in itemList) {
+//                    TaskItem(
+//                        task = sweets,
+//                        //                    onTaskClick = onTaskClick,
+//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+//                        onStarredChange = { onTaskStarredChange(sweets, it) },
+//                        width = screenWidth.toDouble()
+//                    )
+//                }
+//            }
 //            おすすめ
             Row {
                 Icon(
@@ -150,22 +141,22 @@ private fun TaskList(
                 )
                 Text(text = "おすすめ")
             }
-            Row(
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                for (sweets in itemList) {
-                    TaskItem(
-                        task = sweets,
-                        //                    onTaskClick = onTaskClick,
-                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-                        onStarredChange = { onTaskStarredChange(sweets, it) },
-                        width = screenWidth.toDouble()
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier
+//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+//                    .horizontalScroll(rememberScrollState()),
+//                horizontalArrangement = Arrangement.spacedBy(8.dp)
+//            ) {
+//                for (sweets in itemList) {
+//                    TaskItem(
+//                        task = sweets,
+//                        //                    onTaskClick = onTaskClick,
+//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+//                        onStarredChange = { onTaskStarredChange(sweets, it) },
+//                        width = screenWidth.toDouble()
+//                    )
+//                }
+//            }
 //            人気
             Row {
                 Icon(
@@ -175,22 +166,22 @@ private fun TaskList(
                 )
                 Text(text = "人気")
             }
-            Row(
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                for (sweets in itemList) {
-                    TaskItem(
-                        task = sweets,
-                        //                    onTaskClick = onTaskClick,
-                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-                        onStarredChange = { onTaskStarredChange(sweets, it) },
-                        width = screenWidth.toDouble()
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier
+//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+//                    .horizontalScroll(rememberScrollState()),
+//                horizontalArrangement = Arrangement.spacedBy(8.dp)
+//            ) {
+//                for (sweets in itemList) {
+//                    TaskItem(
+//                        task = sweets,
+//                        //                    onTaskClick = onTaskClick,
+//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+//                        onStarredChange = { onTaskStarredChange(sweets, it) },
+//                        width = screenWidth.toDouble()
+//                    )
+//                }
+//            }
 //            急上昇
             Row {
                 Icon(
@@ -200,22 +191,22 @@ private fun TaskList(
                 )
                 Text(text = "急上昇")
             }
-            Row(
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-                    .horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                for (sweets in itemList) {
-                    TaskItem(
-                        task = sweets,
-                        //                    onTaskClick = onTaskClick,
-                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-                        onStarredChange = { onTaskStarredChange(sweets, it) },
-                        width = screenWidth.toDouble()
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier
+//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
+//                    .horizontalScroll(rememberScrollState()),
+//                horizontalArrangement = Arrangement.spacedBy(8.dp)
+//            ) {
+//                for (sweets in itemList) {
+//                    TaskItem(
+//                        task = sweets,
+//                        //                    onTaskClick = onTaskClick,
+//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
+//                        onStarredChange = { onTaskStarredChange(sweets, it) },
+//                        width = screenWidth.toDouble()
+//                    )
+//                }
+//            }
 
         }
     }
