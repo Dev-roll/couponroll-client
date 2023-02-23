@@ -21,7 +21,8 @@ fun CouponRollNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = MyCouponsDestination.route,
+        startDestination = StoreTopDestination.route,
+        // startDestination = MyCouponsDestination.route,
         modifier = modifier
     ) {
         composable(route = MyCouponsDestination.route) {
@@ -31,6 +32,9 @@ fun CouponRollNavHost(
             StoreListScreen(
                 navigateToAddStore = { navController.navigate(AddStoreDestination.route) },
             )
+        }
+        composable(route = StoreTopDestination.route) {
+            StoreTopScreen()
         }
         composable(route = AddStoreDestination.route) {
             AddStoreScreen(
