@@ -5,17 +5,14 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.web.couponroll.CouponRollApplication
-import app.web.couponroll.ui.entry.TaskEntryViewModel
-import app.web.couponroll.ui.home.HomeViewModel
+import app.web.couponroll.ui.my_coupons.MyCouponsViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
-        initializer { TaskEntryViewModel(couponrollApplication().container.tasksRepository) }
-
-        initializer { HomeViewModel(couponrollApplication().container.tasksRepository) }
+        initializer { MyCouponsViewModel(couponRollApplication().container.tasksRepository) }
     }
 
 }
 
-fun CreationExtras.couponrollApplication(): CouponRollApplication =
+fun CreationExtras.couponRollApplication(): CouponRollApplication =
     (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CouponRollApplication)

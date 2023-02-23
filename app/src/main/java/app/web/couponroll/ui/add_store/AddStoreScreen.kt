@@ -25,12 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import app.web.couponroll.R
-import app.web.couponroll.ui.AppViewModelProvider
 import app.web.couponroll.ui.components.CouponRollTopAppBar
-import app.web.couponroll.ui.home.HomeViewModel
 import app.web.couponroll.ui.navigation.NavigationDestination
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -62,10 +59,9 @@ fun AddStoreScreen(
     navController: NavController,
     navigateBack: () -> Unit,
     onNavigateUp: () -> Unit,
-    navigateToTaskEntry: () -> Unit,
     modifier: Modifier = Modifier,
     canNavigateBack: Boolean = true,
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory),
+    //  viewModel: AddStoreViewModel = viewModel(factory = AppViewModelProvider.Factory),
     onImageFile: (File) -> Unit = { },
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 ) {
@@ -264,7 +260,10 @@ fun CameraPreview(
                 // use caseをライフサイクルにバインドする前にアンバインドを行う必要がある
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
-                    lifecycleOwner, CameraSelector.DEFAULT_BACK_CAMERA, previewUseCase, qrCodeAnalysisUseCase
+                    lifecycleOwner,
+                    CameraSelector.DEFAULT_BACK_CAMERA,
+                    previewUseCase,
+                    qrCodeAnalysisUseCase
                 )
             } catch (ex: Exception) {
                 Log.e("CameraPreview", "Use case binding failed", ex)
