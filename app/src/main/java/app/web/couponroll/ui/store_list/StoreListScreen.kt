@@ -107,14 +107,14 @@ private fun TaskList(
                 .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 0.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-//            お気に入り
+//            フォロー中
             Row {
                 Icon(
                     imageVector = Icons.Rounded.Favorite,
                     contentDescription = stringResource(R.string.task_entry_title),
                     tint = MaterialTheme.colorScheme.primary
                 )
-                Text(text = "お気に入り")
+                Text(text = "フォロー中")
             }
 //            Row(
 //                modifier = Modifier
