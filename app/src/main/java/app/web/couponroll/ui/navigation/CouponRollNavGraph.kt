@@ -23,6 +23,8 @@ import app.web.couponroll.ui.my_coupons.MyCouponsDestination
 import app.web.couponroll.ui.my_coupons.MyCouponsScreen
 import app.web.couponroll.ui.store_list.StoreListDestination
 import app.web.couponroll.ui.store_list.StoreListScreen
+import app.web.couponroll.ui.store_top.StoreTopDestination
+import app.web.couponroll.ui.store_top.StoreTopScreen
 
 @Composable
 fun CouponRollNavHost(
@@ -31,7 +33,8 @@ fun CouponRollNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = HomeDestination.route,
+        startDestination = StoreTopDestination.route,
+        // startDestination = HomeDestination.route,
         modifier = modifier
     ) {
         composable(route = HomeDestination.route) {
@@ -47,6 +50,9 @@ fun CouponRollNavHost(
             StoreListScreen(
                 navigateToAddStore = { navController.navigate(AddStoreDestination.route) },
             )
+        }
+        composable(route = StoreTopDestination.route) {
+            StoreTopScreen()
         }
 //        composable(route = HomeDestination.route) {
 //            HomeScreen(

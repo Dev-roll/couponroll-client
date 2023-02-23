@@ -1,4 +1,4 @@
-package app.web.couponroll.ui.my_coupons
+package app.web.couponroll.ui.store_coupons
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -20,47 +20,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.web.couponroll.R
 import app.web.couponroll.model.Task
 import app.web.couponroll.ui.AppViewModelProvider
-import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.home.HomeViewModel
 import app.web.couponroll.ui.navigation.NavigationDestination
 import app.web.couponroll.ui.theme.OffColor
 import app.web.couponroll.ui.theme.StarOnColor
 import coil.compose.rememberAsyncImagePainter
 
-object MyCouponsDestination : NavigationDestination {
-    override val route = "my_coupons"
-    override val titleRes = R.string.my_coupons_title
+object StoreCouponsDestination : NavigationDestination {
+    override val route = "store_coupons"
+    override val titleRes = R.string.store_coupons_title
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyCouponsScreen(
+fun StoreCouponsScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val homeUiState by viewModel.homeUiState.collectAsState()
-    Scaffold(
-        topBar = {
-            CouponRollTopAppBar(
-                title = stringResource(MyCouponsDestination.titleRes),
-                canNavigateBack = false
-            )
-        },
-//        floatingActionButton = {
-//            FloatingActionButton(
-//                onClick = navigateToCapture,
-//                containerColor = MaterialTheme.colorScheme.primary,
-//                contentColor = MaterialTheme.colorScheme.onPrimary,
-//                modifier = Modifier.navigationBarsPadding()
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Rounded.Add,
-//                    contentDescription = stringResource(R.string.task_entry_title),
-//                    tint = MaterialTheme.colorScheme.onPrimary
-//                )
-//            }
-//        },
-    ) { innerPadding ->
+    Scaffold() { innerPadding ->
         HomeBody(
             itemList = homeUiState.itemList,
 //            onTaskClick = navigateToTaskUpdate,
@@ -107,8 +85,7 @@ private fun TaskList(
         Column(
             modifier = Modifier
                 .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
-                .verticalScroll(rememberScrollState())
-                .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             for (sweets in itemList) {
