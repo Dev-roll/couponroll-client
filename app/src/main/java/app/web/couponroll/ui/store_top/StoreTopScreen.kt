@@ -11,11 +11,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.web.couponroll.R
+import app.web.couponroll.ui.components.customTabIndicatorOffset
 import app.web.couponroll.ui.navigation.NavigationDestination
 import app.web.couponroll.ui.store_coupons.StoreCouponsScreen
 import app.web.couponroll.ui.store_details.StoreDetailsScreen
@@ -65,24 +68,60 @@ fun TabLayout() {
                 Text("フォロー中")
             }
         }
-        TabRow(
+        CustomTabRow(
+            tabs = titles,
             selectedTabIndex = state,
-            modifier = Modifier
-                .padding(bottom = 20.dp)
-        ) {
-            titles.forEachIndexed { index, title ->
-                Tab(
-                    selected = state == index,
-                    onClick = { state = index },
-                    text = { Text(text = title, maxLines = 2, overflow = TextOverflow.Ellipsis) }
-                )
-            }
-        }
+            onTabClick = { state = it }
+        )
         Column {
             when (state) {
                 0 -> StoreCouponsScreen()
                 1 -> StoreDetailsScreen()
             }
+        }
+    }
+}
+
+@Composable
+fun CustomTabRow(
+    tabs: List<String>, selectedTabIndex: Int, onTabClick: (Int) -> Unit
+) {
+    val density = LocalDensity.current
+    val tabWidths = remember {
+        val tabWidthStateList = mutableListOf<Dp>()
+        repeat(tabs.size) {
+            tabWidthStateList.add(0.dp)
+        }
+        tabWidthStateList
+    }
+    TabRow(
+        selectedTabIndex = selectedTabIndex,
+        indicator = { tabPositions ->
+            TabRowDefaults.Indicator(
+                modifier = Modifier.customTabIndicatorOffset(
+                    currentTabPosition = tabPositions[selectedTabIndex],
+                    tabWidth = tabWidths[selectedTabIndex]
+                ),
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    ) {
+        tabs.forEachIndexed { index, title ->
+            Tab(
+                selected = selectedTabIndex == index,
+                onClick = { onTabClick(index) },
+                text = {
+                    Text(
+                        text = title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        onTextLayout = { textLayoutResult ->
+                            tabWidths[index] =
+                                with(density) { (textLayoutResult.size.width + 100).toDp() }
+                        },
+                    )
+                }
+            )
         }
     }
 }
