@@ -2,11 +2,14 @@ package app.web.couponroll.ui.store_top
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Code
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,13 +43,24 @@ fun TabLayout() {
 
     // Reuse the default offset animation modifier, but use our own indicator
     Column() {
-        Row(Modifier.padding(all = 12.dp)) {
+        Row(Modifier.padding(all = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(imageVector = Icons.Rounded.Code, contentDescription = null)
             Text(text = "Devroll", fontSize = 20.sp)
-            Icon(imageVector = Icons.Rounded.Person, contentDescription = null)
-            Text(text = "1,000")
+            Icon(
+                imageVector = Icons.Rounded.Person,
+                contentDescription = null,
+                modifier = Modifier.padding(start = 8.dp),
+                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            )
+            Text(
+                text = "1,000",
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                fontSize = 14.sp
+            )
+            Spacer(modifier = Modifier.weight(1f))
             TextButton(
-                onClick = {  },
-                modifier = Modifier.padding(top = 16.dp)
+                onClick = { },
+                modifier = Modifier.padding()
             ) {
                 Text("フォロー中")
             }
