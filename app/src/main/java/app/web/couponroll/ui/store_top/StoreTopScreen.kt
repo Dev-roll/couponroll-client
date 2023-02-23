@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Code
+import androidx.compose.material.icons.rounded.HowToReg
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,6 +41,7 @@ fun StoreTopScreen() {
 fun TabLayout() {
 //    var selectedTabIndex by remember { mutableStateOf(0) }
     var state by remember { mutableStateOf(0) }
+    var isFollowing by remember { mutableStateOf(false) }
     val titles = listOf(
         stringResource(R.string.store_coupons_title),
         stringResource(R.string.store_details_title)
@@ -62,10 +65,34 @@ fun TabLayout() {
             )
             Spacer(modifier = Modifier.weight(1f))
             TextButton(
-                onClick = { },
+                onClick = { isFollowing = !isFollowing },
+                colors = if (isFollowing) {
+                    ButtonDefaults.textButtonColors(
+                        containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                        contentColor = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    ButtonDefaults.textButtonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    )
+                },
                 modifier = Modifier.padding()
             ) {
-                Text("フォロー中")
+                Row {
+                    Icon(
+                        imageVector = if (isFollowing) Icons.Rounded.HowToReg else Icons.Rounded.PersonAdd,
+                        contentDescription = null,
+                        tint = if (isFollowing) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimary
+                    )
+                    Text(
+                        text = if (isFollowing) {
+                            stringResource(R.string.is_following)
+                        } else stringResource(
+                            R.string.is_not_following
+                        )
+                    )
+                }
             }
         }
         CustomTabRow(
