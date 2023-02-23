@@ -4,7 +4,6 @@
 
     <!-- Home -->
     <string name="home_title">CouponRoll (Client)</string>
-    <string name="add_button">タスクを追加</string>
 
     <!-- MyCoupons -->
     <string name="my_coupons_title">Myクーポン</string>
@@ -26,6 +25,7 @@
 
     <!-- Other -->
     <string name="back_button">戻る</string>
+    <string name="close_button">閉じる</string>
     <string name="no_item_description">まだタスクは追加されていません</string>
     <string name="store_coupons_title">クーポン</string>
     <string name="store_top_title">ストアトップ</string>
