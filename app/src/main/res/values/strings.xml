@@ -27,4 +27,7 @@
     <!-- Other -->
     <string name="back_button">戻る</string>
     <string name="no_item_description">まだタスクは追加されていません</string>
+    <string name="store_coupons_title">クーポン</string>
+    <string name="store_top_title">ストアトップ</string>
+    <string name="store_details_title">詳細</string>
 </resources>
