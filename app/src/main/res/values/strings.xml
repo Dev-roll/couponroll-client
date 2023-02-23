@@ -8,9 +8,11 @@
 
     <!-- MyCoupons -->
     <string name="my_coupons_title">Myクーポン</string>
+    <string name="my_coupons_icon_text">Myクーポン</string>
 
     <!-- StoreList -->
     <string name="store_list_title">お店一覧</string>
+    <string name="qr_code_scan_icon_text">お店一覧</string>
     <string name="add_store">お気に入りのお店を追加</string>
 
     <!-- AddStore -->

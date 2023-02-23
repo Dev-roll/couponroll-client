@@ -21,7 +21,6 @@ import app.web.couponroll.R
 import app.web.couponroll.model.Task
 import app.web.couponroll.ui.AppViewModelProvider
 import app.web.couponroll.ui.components.CouponRollTopAppBar
-import app.web.couponroll.ui.home.HomeViewModel
 import app.web.couponroll.ui.navigation.NavigationDestination
 import app.web.couponroll.ui.theme.OffColor
 import app.web.couponroll.ui.theme.StarOnColor
@@ -36,9 +35,9 @@ object MyCouponsDestination : NavigationDestination {
 @Composable
 fun MyCouponsScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    viewModel: MyCouponsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val homeUiState by viewModel.homeUiState.collectAsState()
+    val myCouponsUiState by viewModel.myCouponsUiState.collectAsState()
     Scaffold(
         topBar = {
             CouponRollTopAppBar(
@@ -62,7 +61,7 @@ fun MyCouponsScreen(
 //        },
     ) { innerPadding ->
         HomeBody(
-            itemList = homeUiState.itemList,
+            itemList = myCouponsUiState.itemList,
 //            onTaskClick = navigateToTaskUpdate,
             onTaskCheckedChange = viewModel::completeTask,
             onTaskStarredChange = viewModel::starTask,
