@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material.icons.rounded.QrCode
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarBorder
@@ -14,14 +15,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.web.couponroll.R
@@ -47,10 +51,14 @@ fun CouponItem(
     Box(modifier = modifier
         .clickable {
             isModalOpen = true
-//            onTaskClick(task)
         }
-        .background(color = MaterialTheme.colorScheme.secondaryContainer)
+        .background(
+            color = MaterialTheme.colorScheme.secondaryContainer,
+            shape = RoundedCornerShape(8.dp)
+        ),
+        contentAlignment = Alignment.CenterStart
     ) {
+        val screenWidth = LocalConfiguration.current.screenWidthDp
         Row(verticalAlignment = Alignment.CenterVertically) {
             Row {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -59,40 +67,37 @@ fun CouponItem(
                         onCheckedChange = onCompletedChange,
                         modifier = Modifier
                             .padding(8.dp)
-                            .size(60.dp)
+                            .size(56.dp)
                     ) {
-                        if (task.isCompleted) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Text(text = "-", color = OffColor)
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Column {
-                                    Text(text = "2023", color = OffColor)
-                                    Text(text = "2.28", color = OffColor)
-                                }
-                            }
-                        } else {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Text(text = "-")
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Column {
-                                    Text(text = "2023")
-                                    Text(text = "2.28")
-                                }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "-",
+                                color = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.onBackground
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Column {
+                                Text(
+                                    text = "2023",
+                                    color = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.onBackground,
+                                    fontSize = 12.sp,
+                                )
+                                Text(
+                                    text = "2.28",
+                                    color = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.onBackground,
+                                    fontSize = 12.sp,
+                                )
                             }
                         }
                     }
                     Box(
                         modifier = Modifier
                             .height(2.dp)
-                            .width(40.dp)
+                            .width(32.dp)
                             .background(
-                                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.2f),
+                                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.1f),
                                 shape = RoundedCornerShape(16.dp)
                             )
                     ) {
@@ -102,8 +107,8 @@ fun CouponItem(
                         contentDescription = null,
                         tint = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.primary,
                         modifier = Modifier
-                            .padding(all = 18.dp)
-                            .size(40.dp)
+                            .padding(20.dp)
+                            .size(32.dp)
                     )
                     if (isModalOpen) {
                         AlertDialog(
@@ -130,39 +135,128 @@ fun CouponItem(
                     }
                 }
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(2.dp)
-                    .background(
-                        color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.2f),
-                        shape = RoundedCornerShape(16.dp)
-                    )
-            ) {
+            Box {
+                if (task.isCompleted) {
+                    Box(
+                        modifier = Modifier
+                            .padding(start = (0.5).dp)
+                            .height(144.dp)
+                            .width(3.dp)
+                            .background(
+                                color = MaterialTheme.colorScheme.background
+                            )
+                    ) {
+                    }
+                } else {
+                    Column {
+                        for (i in 0..12) {
+                            Spacer(modifier = Modifier.height(3.dp))
+                            Box(
+                                modifier = Modifier
+                                    .height(4.dp)
+                                    .width(4.dp)
+                                    .background(
+                                        color = MaterialTheme.colorScheme.background,
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                            ) {
+                            }
+                            Spacer(modifier = Modifier.height(3.dp))
+                        }
+                    }
+                }
             }
-            Column {
-                Text(
-                    text = task.title,
-                    fontWeight = FontWeight.Bold,
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = task.description,
-                    fontSize = 14.sp,
-                )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(132.dp),
+                verticalArrangement = Arrangement.Top
+            ) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .height(40.dp)
+                            .width(40.dp)
+                            .background(
+                                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.1f),
+                                shape = RoundedCornerShape(40.dp)
+                            )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Storefront,
+                            contentDescription = null,
+                            tint = OffColor,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+                    Column {
+                        Text(
+                            text = task.title,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "Devroll Store",
+                            fontSize = 11.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                }
+                Row(verticalAlignment = Alignment.Bottom) {
+                    val baseModifier = remember {
+                        Modifier.alignByBaseline()
+                    }
+                    Text(
+                        text = "10",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 50.sp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = baseModifier
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "%",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 32.sp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = baseModifier
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(
+                        text = "OFF",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 24.sp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = baseModifier
+                    )
+                }
             }
             Spacer(modifier = Modifier.weight(1f))
             Box(
                 contentAlignment = Alignment.TopEnd
             ) {
-                Image(
-                    painter = rememberAsyncImagePainter(task.filePath),
-                    contentDescription = "captured image",
-                    contentScale = ContentScale.FillHeight,
+                Box(
                     modifier = Modifier
-                        .width(100.dp)
-                        .height(200.dp)
-                )
+                        .width(148.dp)
+                        .height(148.dp),
+                ) {
+                    Image(
+                        painter = rememberAsyncImagePainter(task.filePath),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(6.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        contentScale = ContentScale.Crop,
+                    )
+                }
                 IconToggleButton(
                     checked = task.isStarred,
                     onCheckedChange = onStarredChange,
@@ -173,7 +267,72 @@ fun CouponItem(
                         tint = if (task.isStarred) StarOnColor else OffColor
                     )
                 }
+                Box(
+                    modifier = Modifier
+                        .height(32.dp)
+                        .width(32.dp)
+                        .absoluteOffset(x = 16.dp, y = 58.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            shape = RoundedCornerShape(32.dp)
+                        )
+                ) {
+                }
+                Box(
+                    modifier = Modifier
+                        .height(32.dp)
+                        .width(32.dp)
+                        .absoluteOffset(x = 32.dp, y = 58.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.background,
+                        )
+                ) {
+                }
             }
+        }
+        Box(
+            modifier = Modifier
+                .height(20.dp)
+                .width(20.dp)
+                .absoluteOffset(x = (-12).dp, y = 0.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.background,
+                    shape = RoundedCornerShape(20.dp)
+                )
+        ) {
+        }
+        Box(
+            modifier = Modifier
+                .height(20.dp)
+                .width(20.dp)
+                .absoluteOffset(x = (screenWidth - 24).dp, y = 0.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.background,
+                    shape = RoundedCornerShape(20.dp)
+                )
+        ) {
+        }
+        Box(
+            modifier = Modifier
+                .height(8.dp)
+                .width(8.dp)
+                .absoluteOffset(x = 70.dp, y = (-74).dp)
+                .background(
+                    color = MaterialTheme.colorScheme.background,
+                    shape = RoundedCornerShape(8.dp)
+                )
+        ) {
+        }
+        Box(
+            modifier = Modifier
+                .height(8.dp)
+                .width(8.dp)
+                .absoluteOffset(x = 70.dp, y = 74.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.background,
+                    shape = RoundedCornerShape(8.dp)
+                )
+        ) {
         }
     }
 }
