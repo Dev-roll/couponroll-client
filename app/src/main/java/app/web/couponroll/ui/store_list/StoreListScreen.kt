@@ -2,24 +2,23 @@ package app.web.couponroll.ui.store_list
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.web.couponroll.R
-import app.web.couponroll.model.Task
 import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.navigation.NavigationDestination
-import app.web.couponroll.ui.theme.OffColor
-import app.web.couponroll.ui.theme.StarOnColor
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 
 object StoreListDestination : NavigationDestination {
     override val route = "store_list"
@@ -30,11 +29,166 @@ object StoreListDestination : NavigationDestination {
 @Composable
 fun StoreListScreen(
     navigateToAddStore: () -> Unit,
-//    navigateToTaskUpdate: (String) -> Unit,
     modifier: Modifier = Modifier,
-//    viewModel: StoreListViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    //  viewModel: StoreListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-//    val storeListUiState by viewModel.storeListUiState.collectAsState()
+    //  val storeListUiState by viewModel.storeListUiState.collectAsState()
+    val storesList = listOf(
+        listOf(
+            Store(
+                id = "1",
+                name = "Devrollストア1",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 1000,
+                maxDiscount = 5,
+            ),
+            Store(
+                id = "2",
+                name = "Devrollストア2",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+            Store(
+                id = "3",
+                name = "Devrollストア3",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+        ),
+        listOf(
+            Store(
+                id = "1",
+                name = "Devrollストア1",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 1000,
+                maxDiscount = 5,
+            ),
+            Store(
+                id = "2",
+                name = "Devrollストア2",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+            Store(
+                id = "3",
+                name = "Devrollストア3",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+        ),
+        listOf(
+            Store(
+                id = "1",
+                name = "Devrollストア1",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 1000,
+                maxDiscount = 5,
+            ),
+            Store(
+                id = "2",
+                name = "Devrollストア2",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+            Store(
+                id = "3",
+                name = "Devrollストア3",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+        ),
+        listOf(
+            Store(
+                id = "1",
+                name = "Devrollストア1",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 1000,
+                maxDiscount = 5,
+            ),
+            Store(
+                id = "2",
+                name = "Devrollストア2",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+            Store(
+                id = "3",
+                name = "Devrollストア3",
+                description = "スターバックスコーヒーは、アメリ",
+                isPublic = "1",
+                iconUrl = "https://cdn.amebaowndme.com/madrid-prd/madrid-web/images/sites/45/68860618a1f13a123d2e10df59baf9e9_f18c9521ada1f2ae75a6866dab1d7409.png",
+                imgUrl = "https://pbs.twimg.com/profile_banners/219867859/1676421470/1500x500",
+                createdAt = "2021-09-01 00:00:00",
+                updatedAt = "2021-09-01 00:00:00",
+                followersCount = 2000,
+                maxDiscount = 10,
+            ),
+        ),
+    )
+
+
     Scaffold(
         topBar = {
             CouponRollTopAppBar(
@@ -57,234 +211,148 @@ fun StoreListScreen(
             }
         },
     ) { innerPadding ->
-        HomeBody(
-//            itemList = storeListUiState.itemList,
-//            onTaskClick = navigateToTaskUpdate,
-//            onTaskCheckedChange = viewModel::completeTask,
-//            onTaskStarredChange = viewModel::starTask,
+        StoreListBody(
+            storesList = storesList,
+            onStoreClick = { },
             modifier = modifier.padding(innerPadding)
         )
     }
 }
 
+
+data class Store(
+    val id: String,
+    val name: String,
+    val description: String,
+    val isPublic: String,
+    val iconUrl: String,
+    val imgUrl: String,
+    val createdAt: String,
+    val updatedAt: String,
+    val followersCount: Int,
+    val maxDiscount: Int,
+)
+
 @Composable
-private fun HomeBody(
-//    itemList: List<Task>,
-//    onTaskClick: (String) -> Unit,
-//    onTaskCheckedChange: (Task, Boolean) -> Unit,
-//    onTaskStarredChange: (Task, Boolean) -> Unit,
+private fun StoreListBody(
+    storesList: List<List<Store>>,
+    onStoreClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-//    if (itemList.isEmpty()) {
-//        Text(
-//            text = stringResource(R.string.no_item_description),
-//            style = MaterialTheme.typography.headlineSmall
-//        )
-//    } else {
-    TaskList(
-//            itemList = itemList,
-//            onTaskClick = { onTaskClick(it.id) },
-//            onTaskCheckedChange = onTaskCheckedChange,
-//            onTaskStarredChange = onTaskStarredChange
+    val titles = listOf<String>(
+        "お気に入り",
+        "おすすめ",
+        "人気",
+        "急上昇"
     )
-//    }
-}
 
-@Composable
-private fun TaskList(
-//    itemList: List<Task>,
-//    onTaskClick: (Task) -> Unit,
-//    onTaskCheckedChange: (Task, Boolean) -> Unit,
-//    onTaskStarredChange: (Task, Boolean) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    BoxWithConstraints {
-        val screenWidth = with(LocalDensity.current) { constraints.maxWidth }
-        Column(
-            modifier = Modifier
-                .padding(start = 8.dp, top = 80.dp, end = 8.dp, bottom = 20.dp)
-                .verticalScroll(rememberScrollState())
-                .padding(start = 0.dp, top = 0.dp, end = 0.dp, bottom = 0.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-//            フォロー中
-            Row {
-                Icon(
-                    imageVector = Icons.Rounded.Favorite,
-                    contentDescription = stringResource(R.string.task_entry_title),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Text(text = "フォロー中")
-            }
-//            Row(
-//                modifier = Modifier
-//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-//                    .horizontalScroll(rememberScrollState()),
-//                horizontalArrangement = Arrangement.spacedBy(8.dp)
-//            ) {
-//                for (sweets in itemList) {
-//                    TaskItem(
-//                        task = sweets,
-//                        //                    onTaskClick = onTaskClick,
-//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-//                        onStarredChange = { onTaskStarredChange(sweets, it) },
-//                        width = screenWidth.toDouble()
-//                    )
-//                }
-//            }
-//            おすすめ
-            Row {
-                Icon(
-                    imageVector = Icons.Rounded.Redeem,
-                    contentDescription = stringResource(R.string.task_entry_title),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Text(text = "おすすめ")
-            }
-//            Row(
-//                modifier = Modifier
-//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-//                    .horizontalScroll(rememberScrollState()),
-//                horizontalArrangement = Arrangement.spacedBy(8.dp)
-//            ) {
-//                for (sweets in itemList) {
-//                    TaskItem(
-//                        task = sweets,
-//                        //                    onTaskClick = onTaskClick,
-//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-//                        onStarredChange = { onTaskStarredChange(sweets, it) },
-//                        width = screenWidth.toDouble()
-//                    )
-//                }
-//            }
-//            人気
-            Row {
-                Icon(
-                    imageVector = Icons.Rounded.ThumbUp,
-                    contentDescription = stringResource(R.string.task_entry_title),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Text(text = "人気")
-            }
-//            Row(
-//                modifier = Modifier
-//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-//                    .horizontalScroll(rememberScrollState()),
-//                horizontalArrangement = Arrangement.spacedBy(8.dp)
-//            ) {
-//                for (sweets in itemList) {
-//                    TaskItem(
-//                        task = sweets,
-//                        //                    onTaskClick = onTaskClick,
-//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-//                        onStarredChange = { onTaskStarredChange(sweets, it) },
-//                        width = screenWidth.toDouble()
-//                    )
-//                }
-//            }
-//            急上昇
-            Row {
-                Icon(
-                    imageVector = Icons.Rounded.TrendingUp,
-                    contentDescription = stringResource(R.string.task_entry_title),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Text(text = "急上昇")
-            }
-//            Row(
-//                modifier = Modifier
-//                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 40.dp)
-//                    .horizontalScroll(rememberScrollState()),
-//                horizontalArrangement = Arrangement.spacedBy(8.dp)
-//            ) {
-//                for (sweets in itemList) {
-//                    TaskItem(
-//                        task = sweets,
-//                        //                    onTaskClick = onTaskClick,
-//                        onCompletedChange = { onTaskCheckedChange(sweets, it) },
-//                        onStarredChange = { onTaskStarredChange(sweets, it) },
-//                        width = screenWidth.toDouble()
-//                    )
-//                }
-//            }
+    val icons = listOf<ImageVector>(
+        Icons.Rounded.Favorite,
+        Icons.Rounded.Redeem,
+        Icons.Rounded.ThumbUp,
+        Icons.Rounded.TrendingUp,
+    )
 
+    Box(modifier = modifier) {
+        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
+            if (storesList.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.no_item_description),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            } else {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    storesList.forEachIndexed { index, stores ->
+                        StoreListRow(
+                            title = titles[index],
+                            icon = icons[index],
+                            stores = stores,
+                            onStoreClick = onStoreClick
+                        )
+                    }
+                }
+            }
         }
     }
+}
 
-//    LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-//        items(items = itemList, key = { it.id }) { item ->
-//            TaskItem(
-//                task = item,
-//                onTaskClick = onTaskClick,
-//                onCompletedChange = { onTaskCheckedChange(item, it) },
-//                onStarredChange = { onTaskStarredChange(item, it) }
-//            )
-//            Divider()
-//        }
-//    }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StoreItem(store: Store, onStoreClick: (String) -> Unit, modifier: Modifier) {
+    val onStoreClickArg = ""
+
+    OutlinedCard(
+        onClick = { onStoreClick(onStoreClickArg) },
+        modifier = modifier
+    ) {
+        AsyncImage(model = store.imgUrl, contentDescription = null)
+        Column(modifier = Modifier.padding(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AsyncImage(
+                    model = store.iconUrl,
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp, 32.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = store.name)
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Rounded.People,
+                        contentDescription = stringResource(R.string.task_entry_title),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = store.followersCount.toString())
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Row(verticalAlignment = Alignment.Bottom) {
+                    val baseModifier = remember {
+                        Modifier.alignByBaseline()
+                    }
+
+                    Text(text = "最大", fontSize = 12.sp, modifier = baseModifier)
+                    Text(text = store.maxDiscount.toString(), modifier = baseModifier)
+                    Text(text = "%引", fontSize = 12.sp, modifier = baseModifier)
+                }
+            }
+        }
+    }
 }
 
 @Composable
-private fun TaskItem(
-    task: Task,
-//    onTaskClick: (Task) -> Unit,
-    onCompletedChange: (Boolean) -> Unit,
-    onStarredChange: (Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-    width: Double
+private fun StoreListRow(
+    title: String,
+    icon: ImageVector,
+    stores: List<Store>,
+    onStoreClick: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier
-        .clickable {
-//            onTaskClick(task)
-        }
-        .background(color = MaterialTheme.colorScheme.secondaryContainer)
-        .padding(8.dp)
+    val lastIndex = stores.size - 1
+
+    Row {
+        Icon(
+            imageVector = icon,
+            contentDescription = stringResource(R.string.task_entry_title),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = title)
+    }
+    LazyRow(
+        modifier = modifier,
+        contentPadding = PaddingValues(start = 0.dp, top = 8.dp, end = 0.dp, bottom = 24.dp)
     ) {
-        Row {
-            Image(
-                painter = rememberAsyncImagePainter(task.filePath),
-                contentDescription = "captured image",
-                contentScale = ContentScale.FillHeight,
-                modifier = Modifier.size((width / 8).dp)
+        itemsIndexed(items = stores) { index: Int, store: Store ->
+            StoreItem(
+                store = store,
+                onStoreClick = onStoreClick,
+                modifier = Modifier.size(180.dp, 140.dp)
             )
-            Row(
-                modifier = modifier
-                    .padding(vertical = 16.dp),
-            ) {
-//                    IconToggleButton(
-//                        checked = task.isCompleted,
-//                        onCheckedChange = onCompletedChange,
-//                    ) {
-//                        Icon(
-//                            imageVector = if (task.isCompleted) Icons.Rounded.TaskAlt else Icons.Rounded.RadioButtonUnchecked,
-//                            contentDescription = if (task.isCompleted) "check on" else "check off",
-//                            tint = if (task.isCompleted) DoneColor else OffColor
-//                        )
-//                    }
-                Column(
-                    modifier = Modifier
-                        .size((width / 5).dp)
-                ) {
-                    Text(
-                        text = task.title,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Text(
-                        text = task.description,
-                        fontSize = 14.sp,
-                    )
-                }
-                IconToggleButton(
-                    checked = task.isStarred,
-                    onCheckedChange = onStarredChange,
-                ) {
-                    Icon(
-                        imageVector = if (task.isStarred) Icons.Rounded.Star else Icons.Rounded.StarBorder,
-                        contentDescription = if (task.isStarred) "check on" else "check off",
-                        tint = if (task.isStarred) StarOnColor else OffColor
-                    )
-                }
-            }
+
+            if (index < lastIndex) Spacer(Modifier.width(24.dp))
         }
     }
 }
