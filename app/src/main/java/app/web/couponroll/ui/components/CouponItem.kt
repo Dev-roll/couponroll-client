@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Storefront
@@ -29,9 +30,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.web.couponroll.R
-import app.web.couponroll.model.Task
+import app.web.couponroll.ui.my_coupons.Coupon
 import app.web.couponroll.ui.theme.OffColor
 import app.web.couponroll.ui.theme.StarOnColor
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
@@ -40,10 +42,10 @@ import java.util.*
 
 @Composable
 fun CouponItem(
-    task: Task,
+    coupon: Coupon,
 //    onTaskClick: (Task) -> Unit,
-    onCompletedChange: (Boolean) -> Unit,
-    onStarredChange: (Boolean) -> Unit,
+//    onCompletedChange: (Boolean) -> Unit,
+//    onStarredChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     width: Double
 ) {
@@ -62,9 +64,12 @@ fun CouponItem(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Row {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    var isUsed by remember {
+                        mutableStateOf(coupon.isUsed)
+                    }
                     IconToggleButton(
-                        checked = task.isCompleted,
-                        onCheckedChange = onCompletedChange,
+                        checked = coupon.isUsed,
+                        onCheckedChange = { isUsed = !isUsed },
                         modifier = Modifier
                             .padding(8.dp)
                             .size(56.dp)
@@ -75,18 +80,18 @@ fun CouponItem(
                         ) {
                             Text(
                                 text = "-",
-                                color = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.onBackground
+                                color = if (coupon.isUsed) OffColor else MaterialTheme.colorScheme.onBackground
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Column {
                                 Text(
                                     text = "2023",
-                                    color = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.onBackground,
+                                    color = if (coupon.isUsed) OffColor else MaterialTheme.colorScheme.onBackground,
                                     fontSize = 12.sp,
                                 )
                                 Text(
                                     text = "2.28",
-                                    color = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.onBackground,
+                                    color = if (coupon.isUsed) OffColor else MaterialTheme.colorScheme.onBackground,
                                     fontSize = 12.sp,
                                 )
                             }
@@ -105,7 +110,7 @@ fun CouponItem(
                     Icon(
                         imageVector = Icons.Rounded.QrCode,
                         contentDescription = null,
-                        tint = if (task.isCompleted) OffColor else MaterialTheme.colorScheme.primary,
+                        tint = if (coupon.isUsed) OffColor else MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .padding(20.dp)
                             .size(32.dp)
@@ -116,7 +121,7 @@ fun CouponItem(
                             title = { Text(text = "クーポン名") },
                             text = {
                                 Column {
-                                    Text(text = "Devroll Store")
+                                    Text(text = coupon.storeName)
                                     QRCode(
                                         text = "https://example.com",
                                         modifier = Modifier.size(320.dp)
@@ -136,7 +141,7 @@ fun CouponItem(
                 }
             }
             Box {
-                if (task.isCompleted) {
+                if (coupon.isUsed) {
                     Box(
                         modifier = Modifier
                             .padding(start = (0.5).dp)
@@ -192,17 +197,22 @@ fun CouponItem(
                             tint = OffColor,
                             modifier = Modifier.size(28.dp)
                         )
+                        AsyncImage(
+                            model = coupon.iconUrl,
+                            contentDescription = null,
+                            modifier = Modifier.clip(CircleShape)
+                        )
                     }
                     Column {
                         Text(
-                            text = task.title,
+                            text = coupon.name,
                             fontWeight = FontWeight.Bold,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = "Devroll Store",
+                            text = coupon.storeName,
                             fontSize = 11.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -214,7 +224,7 @@ fun CouponItem(
                         Modifier.alignByBaseline()
                     }
                     Text(
-                        text = "10",
+                        text = coupon.discount.toString(),
                         fontWeight = FontWeight.Bold,
                         fontSize = 50.sp,
                         color = MaterialTheme.colorScheme.tertiary,
@@ -247,8 +257,8 @@ fun CouponItem(
                         .width(148.dp)
                         .height(148.dp),
                 ) {
-                    Image(
-                        painter = rememberAsyncImagePainter(task.filePath),
+                    AsyncImage(
+                        model = coupon.imgUrl,
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxSize()
@@ -257,14 +267,17 @@ fun CouponItem(
                         contentScale = ContentScale.Crop,
                     )
                 }
+                var isStarred by remember {
+                    mutableStateOf(coupon.isStarred)
+                }
                 IconToggleButton(
-                    checked = task.isStarred,
-                    onCheckedChange = onStarredChange,
+                    checked = coupon.isStarred,
+                    onCheckedChange = { isStarred = !isStarred },
                 ) {
                     Icon(
-                        imageVector = if (task.isStarred) Icons.Rounded.Star else Icons.Rounded.StarBorder,
-                        contentDescription = if (task.isStarred) "check on" else "check off",
-                        tint = if (task.isStarred) StarOnColor else OffColor
+                        imageVector = if (coupon.isStarred) Icons.Rounded.Star else Icons.Rounded.StarBorder,
+                        contentDescription = if (coupon.isStarred) "check on" else "check off",
+                        tint = if (coupon.isStarred) StarOnColor else OffColor
                     )
                 }
                 Box(
