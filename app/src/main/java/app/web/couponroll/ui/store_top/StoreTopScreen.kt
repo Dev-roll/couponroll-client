@@ -28,19 +28,32 @@ import app.web.couponroll.ui.store_details.StoreDetailsScreen
 import coil.compose.rememberAsyncImagePainter
 
 object StoreTopDestination : NavigationDestination {
-    override val route = "store_top"
+    override val route =
+        "store_top?storeName={storeName}&storeDescription={storeDescription}&followersCount={followersCount}"
     override val titleRes = R.string.store_top_title
 }
 
 @Composable
-fun StoreTopScreen() {
+fun StoreTopScreen(
+    storeName: String,
+    storeDescription: String,
+    followersCount: String,
+) {
     Column {
-        TabLayout()
+        TabLayout(
+            storeName = storeName,
+            storeDescription = storeDescription,
+            followersCount = followersCount,
+        )
     }
 }
 
 @Composable
-fun TabLayout() {
+fun TabLayout(
+    storeName: String,
+    storeDescription: String,
+    followersCount: String,
+) {
 //    var selectedTabIndex by remember { mutableStateOf(0) }
     var state by remember { mutableStateOf(0) }
     var isFollowing by remember { mutableStateOf(false) }
@@ -90,7 +103,10 @@ fun TabLayout() {
                 )
             }
         }
-        Row(modifier = Modifier.padding(end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.padding(end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Spacer(modifier = Modifier.weight(1f))
             TextButton(
                 onClick = { isFollowing = !isFollowing },
@@ -123,8 +139,11 @@ fun TabLayout() {
                 }
             }
         }
-        Row(Modifier.padding(start = 16.dp, bottom = 8.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Devroll", fontSize = 20.sp)
+        Row(
+            Modifier.padding(start = 16.dp, bottom = 8.dp, end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = storeName, fontSize = 20.sp)
             Icon(
                 imageVector = Icons.Rounded.Person,
                 contentDescription = null,
@@ -132,7 +151,7 @@ fun TabLayout() {
                 tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
             Text(
-                text = "1,000",
+                text = followersCount,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontSize = 14.sp
             )
@@ -145,7 +164,7 @@ fun TabLayout() {
         Column {
             when (state) {
                 0 -> StoreCouponsScreen()
-                1 -> StoreDetailsScreen()
+                1 -> StoreDetailsScreen(storeDescription = storeDescription)
             }
         }
     }

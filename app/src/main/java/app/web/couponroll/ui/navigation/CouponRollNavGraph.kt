@@ -21,8 +21,7 @@ fun CouponRollNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = StoreTopDestination.route,
-        // startDestination = MyCouponsDestination.route,
+        startDestination = MyCouponsDestination.route,
         modifier = modifier
     ) {
         composable(route = MyCouponsDestination.route) {
@@ -30,11 +29,19 @@ fun CouponRollNavHost(
         }
         composable(route = StoreListDestination.route) {
             StoreListScreen(
+                navController = navController,
                 navigateToAddStore = { navController.navigate(AddStoreDestination.route) },
             )
         }
         composable(route = StoreTopDestination.route) {
-            StoreTopScreen()
+            val storeName = it.arguments?.getString("storeName") ?: ""
+            val storeDescription = it.arguments?.getString("storeDescription") ?: ""
+            val followersCount = it.arguments?.getString("followersCount") ?: ""
+            StoreTopScreen(
+                storeName = storeName,
+                storeDescription = storeDescription,
+                followersCount = followersCount,
+            )
         }
         composable(route = AddStoreDestination.route) {
             AddStoreScreen(
