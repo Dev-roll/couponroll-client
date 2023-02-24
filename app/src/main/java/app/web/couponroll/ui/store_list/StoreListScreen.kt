@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import app.web.couponroll.R
 import app.web.couponroll.ui.components.CouponRollTopAppBar
 import app.web.couponroll.ui.navigation.NavigationDestination
@@ -31,6 +32,7 @@ object StoreListDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StoreListScreen(
+    navController: NavController,
     navigateToAddStore: () -> Unit,
     modifier: Modifier = Modifier,
     //  viewModel: StoreListViewModel = viewModel(factory = AppViewModelProvider.Factory)
@@ -216,7 +218,7 @@ fun StoreListScreen(
     ) { innerPadding ->
         StoreListBody(
             storesList = storesList,
-            onStoreClick = { },
+            navController = navController,
             modifier = modifier.padding(innerPadding)
         )
     }
@@ -239,7 +241,7 @@ data class Store(
 @Composable
 private fun StoreListBody(
     storesList: List<List<Store>>,
-    onStoreClick: (String) -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val titles = listOf<String>(
@@ -270,7 +272,7 @@ private fun StoreListBody(
                             title = titles[index],
                             icon = icons[index],
                             stores = stores,
-                            onStoreClick = onStoreClick
+                            navController = navController,
                         )
                     }
                 }
@@ -281,11 +283,9 @@ private fun StoreListBody(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StoreItem(store: Store, onStoreClick: (String) -> Unit, modifier: Modifier) {
-    val onStoreClickArg = ""
-
+fun StoreItem(store: Store, navController: NavController, modifier: Modifier) {
     OutlinedCard(
-        onClick = { onStoreClick(onStoreClickArg) },
+        onClick = { navController.navigate("store_top?storeName=${store.name}&storeDescription=${store.description}&followersCount=${store.followersCount.toString()}") },
         modifier = modifier
     ) {
         AsyncImage(model = store.imgUrl, contentDescription = null)
@@ -335,7 +335,7 @@ private fun StoreListRow(
     title: String,
     icon: ImageVector,
     stores: List<Store>,
-    onStoreClick: (String) -> Unit,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val lastIndex = stores.size - 1
@@ -356,7 +356,7 @@ private fun StoreListRow(
         itemsIndexed(items = stores) { index: Int, store: Store ->
             StoreItem(
                 store = store,
-                onStoreClick = onStoreClick,
+                navController = navController,
                 modifier = Modifier.size(180.dp, 140.dp)
             )
 
