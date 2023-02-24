@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -11,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.web.couponroll.R
@@ -240,7 +243,7 @@ private fun StoreListBody(
     modifier: Modifier = Modifier
 ) {
     val titles = listOf<String>(
-        "お気に入り",
+        "フォロー中",
         "おすすめ",
         "人気",
         "急上昇"
@@ -291,10 +294,15 @@ fun StoreItem(store: Store, onStoreClick: (String) -> Unit, modifier: Modifier) 
                 AsyncImage(
                     model = store.iconUrl,
                     contentDescription = null,
-                    modifier = Modifier.size(32.dp, 32.dp)
+                    modifier = Modifier
+                        .size(32.dp, 32.dp)
+                        .clip(CircleShape)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = store.name)
+                Text(
+                    text = store.name, maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row {
