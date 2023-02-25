@@ -199,13 +199,21 @@ fun CouponItem(
                             model = coupon.iconUrl,
                             contentDescription = null,
                             modifier = Modifier.clip(CircleShape),
-                            colorFilter = ColorFilter.tint(
-                                if (coupon.isUsed) MaterialTheme.colorScheme.secondaryContainer.copy(
-                                    alpha = 0.5f
-                                ) else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0f),
-                                BlendMode.Darken
-                            ),
                         )
+                        if (coupon.isUsed) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .height(40.dp)
+                                    .width(40.dp)
+                                    .background(
+                                        color = MaterialTheme.colorScheme.secondaryContainer.copy(
+                                            alpha = 0.7f
+                                        ),
+                                        shape = RoundedCornerShape(40.dp)
+                                    )
+                            ) {}
+                        }
                     }
                     Column {
                         Text(
