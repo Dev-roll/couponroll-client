@@ -17,10 +17,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -34,7 +33,6 @@ import app.web.couponroll.ui.my_coupons.Coupon
 import app.web.couponroll.ui.theme.OffColor
 import app.web.couponroll.ui.theme.StarOnColor
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
@@ -55,7 +53,7 @@ fun CouponItem(
             isModalOpen = true
         }
         .background(
-            color = MaterialTheme.colorScheme.secondaryContainer,
+            color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = if (coupon.isUsed) 0.5f else 1f),
             shape = RoundedCornerShape(8.dp)
         ),
         contentAlignment = Alignment.CenterStart
@@ -200,7 +198,13 @@ fun CouponItem(
                         AsyncImage(
                             model = coupon.iconUrl,
                             contentDescription = null,
-                            modifier = Modifier.clip(CircleShape)
+                            modifier = Modifier.clip(CircleShape),
+                            colorFilter = ColorFilter.tint(
+                                if (coupon.isUsed) MaterialTheme.colorScheme.secondaryContainer.copy(
+                                    alpha = 0.5f
+                                ) else MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0f),
+                                BlendMode.Darken
+                            ),
                         )
                     }
                     Column {
@@ -209,6 +213,7 @@ fun CouponItem(
                             fontWeight = FontWeight.Bold,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = if (coupon.isUsed) 0.5f else 1f),
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
@@ -216,18 +221,23 @@ fun CouponItem(
                             fontSize = 11.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = if (coupon.isUsed) 0.5f else 1f),
                         )
                     }
                 }
-                Row(verticalAlignment = Alignment.Bottom) {
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     val baseModifier = remember {
                         Modifier.alignByBaseline()
                     }
                     Text(
                         text = coupon.discount.toString(),
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = if (coupon.isUsed) FontWeight.Medium else FontWeight.Bold,
                         fontSize = 50.sp,
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.tertiary.copy(alpha = if (coupon.isUsed) 0.5f else 1f),
                         modifier = baseModifier
                     )
                     Spacer(modifier = Modifier.width(6.dp))
@@ -235,7 +245,7 @@ fun CouponItem(
                         text = "%",
                         fontWeight = FontWeight.Medium,
                         fontSize = 32.sp,
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.tertiary.copy(alpha = if (coupon.isUsed) 0.5f else 1f),
                         modifier = baseModifier
                     )
                     Spacer(modifier = Modifier.width(10.dp))
@@ -243,7 +253,7 @@ fun CouponItem(
                         text = "OFF",
                         fontWeight = FontWeight.Medium,
                         fontSize = 24.sp,
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.tertiary.copy(alpha = if (coupon.isUsed) 0.5f else 1f),
                         modifier = baseModifier
                     )
                 }
@@ -265,6 +275,7 @@ fun CouponItem(
                             .padding(6.dp)
                             .clip(RoundedCornerShape(8.dp)),
                         contentScale = ContentScale.Crop,
+                        alpha = if (coupon.isUsed) 0.5f else 1f,
                     )
                 }
                 var isStarred by remember {
@@ -286,7 +297,12 @@ fun CouponItem(
                         .width(32.dp)
                         .absoluteOffset(x = 16.dp, y = 58.dp)
                         .background(
-                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            color = if (coupon.isUsed)
+                                alphaBlend(
+                                    MaterialTheme.colorScheme.secondaryContainer,
+                                    MaterialTheme.colorScheme.background,
+                                    0.5f
+                                ) else MaterialTheme.colorScheme.secondaryContainer,
                             shape = RoundedCornerShape(32.dp)
                         )
                 ) {
@@ -387,4 +403,12 @@ private fun generateQRCode(text: String, context: Context): android.graphics.Bit
         }
     }
     return bmp
+}
+
+fun alphaBlend(color1: Color, color2: Color, alpha: Float): Color {
+    val r = color1.red * (1 - alpha) + color2.red * alpha
+    val g = color1.green * (1 - alpha) + color2.green * alpha
+    val b = color1.blue * (1 - alpha) + color2.blue * alpha
+    val a = color1.alpha * (1 - alpha) + color2.alpha * alpha
+    return Color(r, g, b, a)
 }
