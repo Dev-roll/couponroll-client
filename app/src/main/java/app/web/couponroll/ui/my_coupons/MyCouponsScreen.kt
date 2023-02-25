@@ -26,6 +26,7 @@ object MyCouponsDestination : NavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyCouponsScreen(
+    storeId: String = "0",
     modifier: Modifier = Modifier,
     viewModel: MyCouponsViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -137,10 +138,12 @@ fun MyCouponsScreen(
 
     Scaffold(
         topBar = {
-            CouponRollTopAppBar(
-                title = stringResource(MyCouponsDestination.titleRes),
-                canNavigateBack = false
-            )
+            if (storeId == "0") {
+                CouponRollTopAppBar(
+                    title = stringResource(MyCouponsDestination.titleRes),
+                    canNavigateBack = false
+                )
+            }
         },
 //        floatingActionButton = {
 //            FloatingActionButton(
@@ -158,6 +161,7 @@ fun MyCouponsScreen(
 //        },
     ) { innerPadding ->
         HomeBody(
+            storeId = storeId,
             itemList = myCoupons,
 //            onTaskClick = navigateToTaskUpdate,
             onTaskCheckedChange = viewModel::completeTask,
@@ -167,7 +171,7 @@ fun MyCouponsScreen(
     }
 }
 
-data class  Coupon(
+data class Coupon(
     val id: String,
     val storeId: String,
     val storeName: String,
@@ -187,6 +191,7 @@ data class  Coupon(
 
 @Composable
 private fun HomeBody(
+    storeId: String = "0",
     itemList: List<Coupon>,
 //    onTaskClick: (String) -> Unit,
     onTaskCheckedChange: (Task, Boolean) -> Unit,
@@ -200,6 +205,7 @@ private fun HomeBody(
         )
     } else {
         TaskList(
+            storeId = storeId,
             itemList = itemList,
 //            onTaskClick = { onTaskClick(it.id) },
             onTaskCheckedChange = onTaskCheckedChange,
@@ -210,6 +216,7 @@ private fun HomeBody(
 
 @Composable
 private fun TaskList(
+    storeId: String = "0",
     itemList: List<Coupon>,
 //    onTaskClick: (Task) -> Unit,
     onTaskCheckedChange: (Task, Boolean) -> Unit,
@@ -219,20 +226,27 @@ private fun TaskList(
     BoxWithConstraints {
         val screenWidth = with(LocalDensity.current) { constraints.maxWidth }
         Column(
-            modifier = Modifier
-                .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
-                .verticalScroll(rememberScrollState())
-                .padding(start = 0.dp, top = 64.dp, end = 0.dp, bottom = 0.dp),
+            modifier = if (storeId == "0") {
+                Modifier
+                    .padding(start = 8.dp, top = 64.dp, end = 8.dp, bottom = 0.dp)
+                    .verticalScroll(rememberScrollState())
+            } else {
+                Modifier
+                    .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
+                    .verticalScroll(rememberScrollState())
+            },
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             for (couponData in itemList) {
-                CouponItem(
-                    coupon = couponData,
+                if ((storeId != "0" && couponData.storeId == storeId) || storeId == "0") {
+                    CouponItem(
+                        coupon = couponData,
 //                    onTaskClick = onTaskClick,
 //                    onCompletedChange = { onTaskCheckedChange(couponData, it) },
 //                    onStarredChange = { onTaskStarredChange(couponData, it) },
-                    width = screenWidth.toDouble()
-                )
+                        width = screenWidth.toDouble()
+                    )
+                }
             }
         }
     }
