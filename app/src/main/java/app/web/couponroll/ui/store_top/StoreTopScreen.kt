@@ -80,9 +80,9 @@ fun TabLayout(
         )
         Box(modifier = Modifier.height(150.dp)) {
             val painter8: Painter =
-                rememberAsyncImagePainter(imageUrls[8])
+                rememberAsyncImagePainter(imageUrls[4])
             val painter9: Painter =
-                rememberAsyncImagePainter(imageUrls[9])
+                rememberAsyncImagePainter(imageUrls[5])
             Image(
                 painter = painter8,
                 contentDescription = null,
